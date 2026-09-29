@@ -1,39 +1,39 @@
 # DNA Sequence Analyzer
 
-A menu-driven Python program for basic DNA sequence analysis. Built as a **VITyarthi Python Project**.
+A small menu-driven Python program that does basic analysis on DNA sequences. I made it as my project for the VITyarthi Python course.
 
 **Author:** Rajat Verma (Integrated M.Tech, AI and Bioinformatics, VIT Bhopal)
 
 ---
 
-## Features
+## What it does
 
-1. **Enter a sequence** by typing it, or **load it from a `.txt` / FASTA file**
-2. **Validation**: only `A`, `T`, `G`, `C` are accepted (spaces/newlines are removed and lowercase is converted automatically)
-3. **Base count and percentage** for A, T, G, C
-4. **GC content** (in %)
-5. **Reverse complement** of the strand
-6. **Transcription**: DNA → RNA (T becomes U)
-7. **Translation**: RNA → Protein using the standard genetic code
-8. **Motif search**: finds all 1-based start positions of a motif
-9. **Save a full report** to `report.txt`
+You can give it a DNA sequence, either by typing it in or by loading a `.txt` or FASTA file. Then it can:
+
+- Check that the sequence is valid (only A, T, G and C are allowed). Spaces and newlines are removed and lowercase letters are converted to uppercase, so you don't have to clean the input first.
+- Count each base and show its percentage
+- Calculate the GC content
+- Give the reverse complement
+- Transcribe DNA to RNA (T becomes U)
+- Translate the sequence into a protein using the standard genetic code
+- Search for a motif and show every position where it appears (positions start from 1)
+- Save everything into a `report.txt` file
 
 ---
 
 ## Requirements
 
-- Python 3.6 or above (uses f-strings)
-- No external libraries needed. Only built-in Python is used.
+Python 3.6 or newer, because I used f-strings. There are no external libraries, only built-in Python.
 
 ---
 
-## How to Run
+## How to run
 
 ```bash
 python dna_analyzer.py
 ```
 
-You will see this menu:
+This menu will show up:
 
 ```
 ===== DNA SEQUENCE ANALYZER =====
@@ -49,13 +49,13 @@ You will see this menu:
 0. Exit
 ```
 
-First choose option **1** or **2** to load a sequence. After that, options 3 to 9 work on that sequence.
+Start with option 1 or 2 to load a sequence. Options 3 to 9 all work on whatever sequence you loaded.
 
 ---
 
-## Input File Format
+## Input file format
 
-A plain text file or a FASTA file. Lines starting with `>` (FASTA headers) are skipped, and the remaining lines are joined into one sequence.
+Any plain text file or FASTA file works. Lines starting with `>` (the FASTA header) are skipped, and all the other lines are joined into a single sequence. For example:
 
 ```
 >sample_sequence
@@ -67,21 +67,23 @@ CCGCTGA
 
 ## Example
 
-**Input sequence:** `ATGGCCATTGTAATGGGCCGCTGA`
+I tested it with the sequence `ATGGCCATTGTAATGGGCCGCTGA`:
 
-| Analysis           | Result                     |
-|--------------------|----------------------------|
-| Length             | 24 bases                   |
-| A / T / G / C      | 5 / 6 / 8 / 5              |
-| GC content         | 54.17%                     |
-| Reverse complement | `TCAGCGGCCCATTACAATGGCCAT` |
-| RNA                | `AUGGCCAUUGUAAUGGGCCGCUGA` |
-| Protein            | `MAIVMGR`                  |
-| Motif `ATG`        | found 2 time(s) at positions `[1, 13]` |
+| Analysis           | Result                                  |
+|--------------------|-----------------------------------------|
+| Length             | 24 bases                                |
+| A / T / G / C      | 5 / 6 / 8 / 5                           |
+| GC content         | 54.17%                                  |
+| Reverse complement | `TCAGCGGCCCATTACAATGGCCAT`              |
+| RNA                | `AUGGCCAUUGUAAUGGGCCGCUGA`              |
+| Protein            | `MAIVMGR`                               |
+| Motif `ATG`        | found 2 times, at positions `[1, 13]`   |
 
 ---
 
-## Sample Report (`report.txt`)
+## Sample report
+
+This is what `report.txt` looks like for the same sequence:
 
 ```
 ==================================================
@@ -105,18 +107,20 @@ Protein         : MAIVMGR
 
 ---
 
-## How It Works
+## How it works
 
-- **Codon table:** all 64 codons are generated with nested loops from `BASES = "TCAG"` and a 64-letter amino acid string (`*` = STOP codon).
-- **Translation:** starts from the first base, reads in triplets, and stops at the first STOP codon.
-- **Motif search:** slides a window over the sequence and records every match (overlapping matches are included).
+**Codon table:** Instead of typing out all 64 codons by hand, I generate them with nested loops. The loops use `BASES = "TCAG"` and a 64-letter string of amino acids, where `*` means a STOP codon.
+
+**Translation:** It starts at the first base, reads the sequence three letters at a time, and stops when it hits the first STOP codon.
+
+**Motif search:** It slides a window across the sequence and notes every match. Overlapping matches are counted too.
 
 ---
 
-## Project Structure
+## Files
 
 ```
-dna_analyzer.py   # main program (all code in one file)
+dna_analyzer.py   # the whole program, in one file
 README.md         # this file
 report.txt        # created when you choose option 9
 ```
@@ -125,16 +129,16 @@ report.txt        # created when you choose option 9
 
 ## Limitations
 
-- Only `A`, `T`, `G`, `C` are supported (ambiguous bases like `N` are rejected).
-- Translation always starts from the first base (no search for the `ATG` start codon and no other reading frames).
-- Only the standard genetic code is used.
-- The report is always saved as `report.txt` in the current folder (an existing file is overwritten).
+- Only A, T, G and C are accepted. Ambiguous bases like `N` are rejected.
+- Translation always begins at the first base. It doesn't look for an `ATG` start codon or try other reading frames.
+- Only the standard genetic code is supported.
+- The report is always saved as `report.txt` in the current folder, and it overwrites any existing file with that name.
 
 ---
 
-## Possible Future Improvements
+## Ideas for later
 
 - Translate all 6 reading frames and find ORFs
-- Support for IUPAC ambiguity codes
-- Molecular weight and melting temperature calculation
-- Custom output file name for the report
+- Support IUPAC ambiguity codes
+- Add molecular weight and melting temperature
+- Let the user choose the report file name

@@ -49,7 +49,7 @@ I tested it manually with a few different sequences. Some things to try:
 
 A real run of the program, entering a sequence and trying a few options:
 
-![DNA analyzer sample run](screenshot.png)
+![DNA analyzer sample run](output.png)
 
 ## Things that don't work well yet
 
